@@ -84,4 +84,3 @@ def deploy():
     if not path:
         return False
     return do_deploy(path)
-    
