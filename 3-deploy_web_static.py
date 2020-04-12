@@ -82,6 +82,6 @@ def deploy():
     '''Deploys a new web app to servers'''
     path = do_pack()
     if not path:
-    	return False
+        return False
     result = do_deploy(path)
     return result
