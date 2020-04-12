@@ -3,7 +3,7 @@
 import fabric
 from fabric.api import env
 import datetime
-from os import path, listdir
+from os import path
 
 
 fabric.operations.env.user = 'ubuntu'
@@ -22,7 +22,7 @@ def do_pack():
         name = name.replace(":", "")
         name = "versions/web_static_" + name
         fabric.operations.local("tar -czvf {}.tgz web_static".format(name))
-        return name
+        return name + ".tgz"
     except:
         return None
 
