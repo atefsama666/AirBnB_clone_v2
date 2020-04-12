@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 '''Module to compress folder into tgz'''
 import fabric
-from fabric.api import env
+from fabric.api import env, lcd, cd
 import datetime
 from os import path, listdir
 
@@ -90,12 +90,19 @@ def do_clean(number=0):
     '''Cleans local and remote from archives'''
     files = listdir("versions/")
     files.sort()
+    number = int(number)
     if number == 0:
         number += 1
-    delete = len(files) - int(number)
-    for i in range(delete):
-        archive_name = files[i]
-        name_no_ex = archive_name.split(".")[0]
-        fabric.operations.local("rm -f versions/{}".format(archive_name))
-        fabric.operations.run(
-            "rm -rf /data/web_static/releases/{}".format(name_no_ex))
+    for k in range(number):
+        files.pop()
+    with lcd("versions"):
+        for archive in files:
+            fabric.operations.local("rm -f ./{}".format(archive))
+    with cd("/data/web_static/releases"):
+        files = fabric.operations.run("ls -ltr").split()
+        files = [file for file in files if "web_static_" in file]
+        for k in range(number):
+            files.pop()
+        for archive in files:
+            name_no_ex = archive.split(".")[0]
+            fabric.operations.local("rm -rf ./{}".format(name_no_ex))
