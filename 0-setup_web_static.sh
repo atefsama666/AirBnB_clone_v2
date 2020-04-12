@@ -14,3 +14,4 @@ chown -R ubuntu:ubuntu /data/
 location="\\\tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}"
 sed -i " 25i $location" /etc/nginx/sites-enabled/default
 service nginx restart
+
