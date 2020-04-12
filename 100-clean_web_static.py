@@ -3,7 +3,7 @@
 import fabric
 from fabric.api import env
 import datetime
-from os import path
+from os import path, listdir
 
 
 fabric.operations.env.user = 'ubuntu'
