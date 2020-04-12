@@ -10,6 +10,7 @@ fabric.operations.env.user = 'ubuntu'
 fabric.operations.env.hosts = ['35.237.127.243', '54.90.102.32']
 env.key_filename = "~/.ssh/holberton"
 
+
 def do_pack():
     '''Packs a folder into tgz'''
     try:
@@ -24,6 +25,7 @@ def do_pack():
         return name
     except:
         return None
+
 
 def do_deploy(archive_path):
     '''Distributes archive to web servers'''
@@ -44,15 +46,19 @@ def do_deploy(archive_path):
     if fail:
         return False
     #   Decompression
-    fail = fabric.operations.run("tar -C {} -zxvf /tmp/{}".format(extraction_path, name)).failed
+    fail = fabric.operations.run(
+        "tar -C {} -zxvf /tmp/{}".format(extraction_path, name)).failed
     if fail:
         return False
     #   Moving files out of web_static
-    fail = fabric.operations.run("mv {}/web_static/* {}/".format(extraction_path, extraction_path)).failed
+    fail = fabric.operations.run(
+        "mv {}/web_static/* {}/".format(
+            extraction_path, extraction_path)).failed
     if fail:
         return False
     #   Removing web_static folder
-    fail = fabric.operations.run("rm -rf {}/web_static".format(extraction_path)).failed
+    fail = fabric.operations.run(
+        "rm -rf {}/web_static".format(extraction_path)).failed
     if fail:
         return False
     #   Cleaning tmp
@@ -70,6 +76,3 @@ def do_deploy(archive_path):
     if fail:
         return False
     return True
-    
-        
-    
