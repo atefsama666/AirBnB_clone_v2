@@ -1,7 +1,7 @@
 #!/bin/bash
 # nginx quick simple setup
-v=$(dpkg -l | grep "nginx")
-if [[ -z $v ]]; then
+if dpkg -l | grep -q "nginx" 
+then
 	apt-get -y update
 	apt-get -y upgrade
 	apt-get -y install nginx
