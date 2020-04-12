@@ -3,7 +3,7 @@
 import fabric
 from fabric.api import env
 import datetime
-from os import path
+from os import path, listdir
 
 
 fabric.operations.env.user = 'ubuntu'
@@ -84,4 +84,18 @@ def deploy():
     if not path:
         return False
     return do_deploy(path)
-    
+
+
+def do_clean(number=0):
+    '''Cleans local and remote from archives'''
+    files = listdir("versions/")
+    files.sort()
+    if number == 0:
+        number += 1
+    delete = len(files) - int(number)
+    for i in range(delete):
+        archive_name = files[i]
+        name_no_ex = archive_name.split(".")[0]
+        fabric.operations.local("rm -f versions/{}".format(archive_name))
+        fabric.operations.run(
+            "rm -rf /data/web_static/releases/{}".format(name_no_ex))
