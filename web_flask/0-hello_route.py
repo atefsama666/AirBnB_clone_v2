@@ -1,10 +1,12 @@
 #!/usr/bin/python3
+"""Python Module"""
 from flask import Flask
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
 def helloHbnb():
+	"""Python Method"""
     return 'Hello HBNB!'
 
 
