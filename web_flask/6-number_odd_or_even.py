@@ -48,7 +48,8 @@ def numberEven(number):
         result = "even"
     else:
         result = "odd"
-    return render_template('6-number_odd_or_even.html', result=result)
+    return render_template('6-number_odd_or_even.html', result=result,
+                           number=number)
 
 
 if __name__ == "__main__":
